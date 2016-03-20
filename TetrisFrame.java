@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 public class TetrisFrame extends JFrame
 {
+    final Timer clockTimer;
+
     public TetrisFrame(final Board board) throws HeadlessException {
 	super("Tetris");
 	final TetrisComponent gameArea = new TetrisComponent(board);
@@ -63,12 +65,6 @@ public class TetrisFrame extends JFrame
 		}
 	    }
 	}
-	class NewGameAction extends AbstractAction {
-	    @Override public void actionPerformed(final ActionEvent e) {
-		dispose();
-		new TetrisFrame(new Board(10, 20));
-	    }
-	}
 
 	final InputMap in = gameArea.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 	in.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight" );
@@ -91,18 +87,25 @@ public class TetrisFrame extends JFrame
 		    score.setText("Score: " + board.getPoints());
 		}
 		else {
-		    System.out.println("hello");
 		    dispose();
-		    new TetrisFrame(board);
+		    stopTimer();
+		    new TetrisFrame(new Board(10, 20));
 		}
 	    }
 	};
 
-	final Timer clockTimer = new Timer(500, doOneStep);
+
+	clockTimer = new Timer(500, doOneStep);
+	startTimer();
+    }
+
+    public void startTimer() {
 	clockTimer.setCoalesce(true);
 	clockTimer.start();
-	//clockTimer.stop();
+    }
 
+    public void stopTimer() {
+	clockTimer.stop();
     }
 
     private class QuitListener implements ActionListener {
@@ -117,6 +120,7 @@ public class TetrisFrame extends JFrame
     private class NewGameListener implements ActionListener {
 	@Override public void actionPerformed(final ActionEvent e) {
 	    dispose();
+	    stopTimer();
 	    new TetrisFrame(new Board(10,20));
 	}
     }

@@ -114,7 +114,6 @@ public class Board
 		    }
 		}
 		addPoints(removedRows);
-		System.out.println(points);
 		falling = null;
 	    }
 	    notifyListeners();
