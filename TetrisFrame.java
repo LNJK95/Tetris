@@ -87,9 +87,21 @@ public class TetrisFrame extends JFrame
 		    score.setText("Score: " + board.getPoints());
 		}
 		else {
-		    dispose();
-		    stopTimer();
-		    new TetrisFrame(new Board(10, 20));
+		    String player = JOptionPane.showInputDialog(new JFrame(), "Please enter your name :)");
+		    Highscore hs = new Highscore(board.getPoints(), player);
+		    HighscoreList.getInstance().addHighscore(hs);
+		    int answer =
+			    JOptionPane.showConfirmDialog(new JFrame(),
+							  HighscoreList.getInstance() + "\n" + "Do you want to play again?",
+							  "Game Over", JOptionPane.YES_NO_OPTION);
+		    if (answer == JOptionPane.YES_OPTION) {
+			dispose();
+			stopTimer();
+			new TetrisFrame(new Board(10, 20));
+		    }
+		    else if (answer == JOptionPane.NO_OPTION) {
+			System.exit(0);
+		    }
 		}
 	    }
 	};
