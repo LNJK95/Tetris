@@ -16,6 +16,7 @@ public class TetrisFrame extends JFrame
 	this.add(gameArea, BorderLayout.CENTER);
 
 	final JLabel score = new JLabel("Score: " + board.getPoints());
+	final JLabel collisionHandler = new JLabel(board.getCHandler().getType());
 
 	final JMenuBar menuBar = new JMenuBar();
 	final JMenu options = new JMenu("Options");
@@ -30,6 +31,7 @@ public class TetrisFrame extends JFrame
 	menuBar.add(options);
 	this.setJMenuBar(menuBar);
 	this.add(score, BorderLayout.PAGE_START);
+	this.add(collisionHandler, BorderLayout.PAGE_END);
 
 	this.setVisible(true);
 	this.pack();
@@ -85,6 +87,7 @@ public class TetrisFrame extends JFrame
 		if (!board.getGameOver()) {
 		    board.tick();
 		    score.setText("Score: " + board.getPoints());
+		    collisionHandler.setText(board.getCHandler().getType());
 		}
 		else {
 		    String player = JOptionPane.showInputDialog(new JFrame(), "Please enter your name :)");

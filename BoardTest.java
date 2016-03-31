@@ -7,3 +7,4 @@ public class BoardTest
 	new TetrisFrame(board);
     }
 }
+
